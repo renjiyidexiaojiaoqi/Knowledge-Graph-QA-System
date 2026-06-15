@@ -31,17 +31,17 @@ st.set_page_config(
 def init_connections():
     """初始化数据库连接"""
     try:
+        # 从 secrets 读取配置
         neo4j_driver = GraphDatabase.driver(
-            "neo4j+s://398bb8cd.databases.neo4j.io",
-            auth=("398bb8cd", "WzUky0y7CXAo-nmxahMwsn5eoP1u-HUm1_zimdtMl8A")
+            st.secrets["NEO4J_URI"],
+            auth=(st.secrets["NEO4J_USER"], st.secrets["NEO4J_PASSWORD"])
         )
         
-        mongo_client = MongoClient(
-            "mongodb+srv://zhh:123456Qwe@cluster0.7sonwry.mongodb.net/?appName=Cluster0"
-        )
+        mongo_client = MongoClient(st.secrets["MONGO_URI"])
         mongo_db = mongo_client["hotpotqa"]
         mongo_col = mongo_db["questions"]
         
+        # 测试连接
         mongo_col.count_documents({})
         st.sidebar.success("✅ 数据库连接成功")
         
