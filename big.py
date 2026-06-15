@@ -369,21 +369,7 @@ def main():
                 else:
                     st.warning(f"未找到包含 '{search_term}' 的问题")
         
-        else:
-            # 显示示例问题
-            st.subheader("📋 示例问题")
-            sample_questions = get_all_mongodb_questions(mongo_col, 20)
-            if sample_questions:
-                for q in sample_questions[:10]:
-                    with st.container():
-                        col1, col2 = st.columns([4, 1])
-                        with col1:
-                            st.markdown(f"**{q.get('question', 'N/A')[:150]}**")
-                        with col2:
-                            if st.button("查看", key=f"btn_{q['_id']}"):
-                                st.session_state.selected_qid = q['_id']
-                                st.rerun()
-                        st.markdown("---")
+
         
         # 显示选中的问题详情
         if st.session_state.selected_qid:
